@@ -900,23 +900,30 @@ function CheckRestrictions(location)
 end
 
 function SetupInteraction()
-    local text = CustomsData.drawtextui
-    if Config.UseRadial then
-        if not radialMenuItemId then
-            radialMenuItemId = exports['qb-radialmenu']:AddOption({
-                id = 'customs',
-                title = 'Enter Customs',
-                icon = 'wrench',
-                type = 'client',
-                event = 'qb-customs:client:EnterCustoms',
-                shouldClose = true
-            })
+    QBCore.Functions.TriggerCallback('getCurrentMechanics', function(result)
+        local text = CustomsData.drawtextui
+        local currentMechanics = result
+        if Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then
+            text = 'Customs is currrently disabled because you can go to a mechanic'
+        else
+            if Config.UseRadial then
+                if not radialMenuItemId then
+                    radialMenuItemId = exports['qb-radialmenu']:AddOption({
+                        id = 'customs',
+                        title = 'Enter Customs',
+                        icon = 'wrench',
+                        type = 'client',
+                        event = 'qb-customs:client:EnterCustoms',
+                        shouldClose = true
+                    })
+                end
+            else
+                text = '[E] '..text
+                CheckForKeypress()
+            end
         end
-    else
-        text = '[E] '..text
-        CheckForKeypress()
-    end
-    exports['qb-core']:DrawText(text, 'left')
+        exports['qb-core']:DrawText(text, 'left')
+    end)
 end
 
 exports('GetCustomsData', function() if next(CustomsData) ~= nil then return CustomsData else return nil end end)

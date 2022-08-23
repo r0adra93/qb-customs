@@ -16,8 +16,19 @@ local function IsVehicleOwned(plate)
 end
 
 -----------------------
-----   Threads     ----
+----   Callbacks   ----
 -----------------------
+
+QBCore.Functions.CreateCallback('getCurrentMechanics', function(_, cb)
+    local currentMechanics = 0
+    local players = QBCore.Functions.GetQBPlayers()
+    for i = 1, #players do
+        if players[i].PlayerData.job.name == 'mechanic' then
+            currentMechanics += 1
+        end
+    end
+    cb(currentMechanics)
+end)
 
 -----------------------
 ---- Server Events ----
