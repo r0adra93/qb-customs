@@ -23,7 +23,7 @@ QBCore.Functions.CreateCallback('getCurrentMechanics', function(_, cb)
     local currentMechanics = 0
     local players = QBCore.Functions.GetQBPlayers()
     for i = 1, #players do
-        if players[i].PlayerData.job.name == 'mechanic' then
+        if players[i].PlayerData.job.name == 'mechanic' and players[i].PlayerData.job.onduty then
             currentMechanics += 1
         end
     end
