@@ -904,7 +904,7 @@ function SetupInteraction()
         local text = CustomsData.drawtextui
         local currentMechanics = result
         if Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then
-            text = 'Customs are currrently disabled because you can go to a mechanic'
+            text = text .. ' is currently unavailable. Please find a mechanic.'
         else
             if Config.UseRadial then
                 if not radialMenuItemId then
