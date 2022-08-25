@@ -35,6 +35,7 @@ end)
 RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
+    local job = Player.PlayerData.job.name
     local moneyType = Config.MoneyType
     local balance = Player.Functions.GetMoney(moneyType)
     local price
@@ -47,8 +48,24 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
     else
         price = vehicleCustomisationPrices[type].price
     end
+    for i = 1, #Config.PaidBySociety do
+        if Config.PaidBySociety[i] == job then
+            local societyBalance = exports['qb-management']:GetAccount(job)
+            if societyBalance >= price then
+                balance = societyBalance
+                moneyType = 'society'
+            else
+                TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
+            end
+            break
+        end
+    end
     if balance >= price then
-        Player.Functions.RemoveMoney(moneyType, price, "bennys")
+        if moneyType ~= 'society' then
+            Player.Functions.RemoveMoney(moneyType, price, "bennys")
+        else
+            exports['qb-management']:RemoveMoney(job, price)
+        end
         TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
         exports['qb-management']:AddMoney("mechanic", price)
     else

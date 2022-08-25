@@ -28,6 +28,10 @@ Config.DisabledCategoriesMechanics = {
     cosmetics = false,
 } -- `true` to disable category if enough mechanics are online and on-duty, `false` to ignore
 
+Config.PaidBySociety = {
+    -- 'mechanic',
+} -- List of job societies that pay for employees, regardless of the customs location
+
 maxVehiclePerformanceUpgrades = 0 -- | All Upgrades: 0 | No Upgrades: -1 | Can be -1 to 4
 
 -- ADJUST PRICING
