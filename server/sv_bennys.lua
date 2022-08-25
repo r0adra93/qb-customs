@@ -37,34 +37,22 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
     local Player = QBCore.Functions.GetPlayer(source)
     local moneyType = Config.MoneyType
     local balance = Player.Functions.GetMoney(moneyType)
-
+    local price
     if type == "repair" then
-        local repairCost = RepairCosts[source] or Config.DefaultRepairPrice
+        price = RepairCosts[source] or Config.DefaultRepairPrice
         moneyType = Config.RepairMoneyType
         balance = Player.Functions.GetMoney(moneyType)
-        if balance >= repairCost then
-            Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            exports['qb-management']:AddMoney("mechanic", repairCost)
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
-        end
     elseif type == "performance" or type == "turbo" then
-        if balance >= vehicleCustomisationPrices[type].prices[upgradeLevel] then
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
-            exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].prices[upgradeLevel])
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
-        end
+        price = vehicleCustomisationPrices[type].prices[upgradeLevel]
     else
-        if balance >= vehicleCustomisationPrices[type].price then
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
-            exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].price)
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
-        end
+        price = vehicleCustomisationPrices[type].price
+    end
+    if balance >= price then
+        Player.Functions.RemoveMoney(moneyType, price, "bennys")
+        TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
+        exports['qb-management']:AddMoney("mechanic", price)
+    else
+        TriggerClientEvent('qb-customs:client:purchaseFailed', source)
     end
 end)
 
