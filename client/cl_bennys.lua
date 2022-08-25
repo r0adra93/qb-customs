@@ -901,7 +901,7 @@ function SetupInteraction()
     QBCore.Functions.TriggerCallback('getCurrentMechanics', function(result)
         local text = CustomsData.drawtextui
         local currentMechanics = result
-        if Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then
+        if PlayerData.job.name ~= 'mechanic' and Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then
             text = text .. ' is currently unavailable. Please find a mechanic.'
         else
             if Config.UseRadial then
