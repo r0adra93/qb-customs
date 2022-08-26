@@ -32,7 +32,7 @@ AddEventHandler("playerDropped", function()
     RepairCosts[source] = nil
 end)
 
-RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel)
+RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel, location)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
     local job = Player.PlayerData.job.name
@@ -48,16 +48,27 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
     else
         price = vehicleCustomisationPrices[type].price
     end
+    local restrictionJobs = Config.Locations[location] and (Config.Locations[location].restrictions and Config.Locations[location].restrictions.job) or {}
+    local payWithSociety = false
+    for i = 1, #restrictionJobs do
+        if restrictionJobs[i] == job then
+            payWithSociety = true
+            break
+        end
+    end
     for i = 1, #Config.PaidBySociety do
         if Config.PaidBySociety[i] == job then
-            local societyBalance = exports['qb-management']:GetAccount(job)
-            if societyBalance >= price then
-                balance = societyBalance
-                moneyType = 'society'
-            else
-                TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
-            end
+            payWithSociety = true
             break
+        end
+    end
+    if payWithSociety then
+        local societyBalance = exports['qb-management']:GetAccount(job)
+        if societyBalance >= price then
+            balance = societyBalance
+            moneyType = 'society'
+        else
+            TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
         end
     end
     if balance >= price then
