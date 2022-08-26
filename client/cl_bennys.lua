@@ -898,7 +898,7 @@ function CheckRestrictions(location)
 end
 
 function SetupInteraction()
-    QBCore.Functions.TriggerCallback('getCurrentMechanics', function(result)
+    QBCore.Functions.TriggerCallback('qb-customs:server:getOnDutyMechanics', function(result)
         local text = CustomsData.drawtextui
         local currentMechanics = result
         if PlayerData.job.name ~= 'mechanic' and Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then

@@ -19,7 +19,7 @@ end
 ----   Callbacks   ----
 -----------------------
 
-QBCore.Functions.CreateCallback('getCurrentMechanics', function(_, cb)
+QBCore.Functions.CreateCallback('qb-customs:server:getOnDutyMechanics', function(_, cb)
     local currentMechanics = 0
     local players = QBCore.Functions.GetQBPlayers()
     for i = 1, #players do
