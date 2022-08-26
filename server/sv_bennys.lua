@@ -48,7 +48,7 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
     else
         price = vehicleCustomisationPrices[type].price
     end
-    local restrictionJobs = Config.Locations[location] and (Config.Locations[location].restrictions and Config.Locations[location].restrictions.job) or {}
+    local restrictionJobs = Config.Locations[location] and Config.Locations[location].restrictions.job or {}
     local payWithSociety = false
     for i = 1, #restrictionJobs do
         if restrictionJobs[i] == job then
