@@ -87,7 +87,7 @@ RegisterNetEvent("qb-customs:server:updateVehicle", function(myCar)
     end
 end)
 
--- Use somthing like this to dynamically enable/disable a location. Can be used to change anything at a location.
+-- Use this event to dynamically enable/disable a location. Can be used to change anything at a location.
 -- TriggerEvent('qb-customs:server:UpdateLocation', 'Hayes', 'settings', 'enabled', test)
 
 RegisterNetEvent('qb-customs:server:UpdateLocation', function(location, type, key, value)
