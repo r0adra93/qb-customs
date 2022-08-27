@@ -30,6 +30,10 @@ QBCore.Functions.CreateCallback('qb-customs:server:getOnDutyMechanics', function
     cb(currentMechanics)
 end)
 
+QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
+    cb(Config.Locations)
+end)
+
 -----------------------
 ---- Server Events ----
 -----------------------
@@ -95,10 +99,6 @@ RegisterNetEvent('qb-customs:server:UpdateLocation', function(location, type, ke
     if not QBCore.Functions.HasPermission(source, 'god') then CancelEvent() end
     Config.Locations[location][type][key] = value
     TriggerClientEvent('qb-customs:client:UpdateLocation', -1, location, type, key, value)
-end)
-
-QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
-    cb(Config.Locations)
 end)
 
 -- name, help, args, argsrequired, cb, perms
