@@ -81,7 +81,7 @@ end)
 
 RegisterNetEvent('qb-customs:server:updateRepairCost', function(cost)
     local source = source
-    if not QBCore.Functions.HasPermission(source, 'god') then CancelEvent() end
+    if not QBCore.Functions.HasPermission(source, 'god') then return CancelEvent() end
     RepairCosts[source] = cost
 end)
 
@@ -96,7 +96,7 @@ end)
 
 RegisterNetEvent('qb-customs:server:UpdateLocation', function(location, type, key, value)
     local source = source
-    if not QBCore.Functions.HasPermission(source, 'god') then CancelEvent() end
+    if not QBCore.Functions.HasPermission(source, 'god') then return CancelEvent() end
     Config.Locations[location][type][key] = value
     TriggerClientEvent('qb-customs:client:UpdateLocation', -1, location, type, key, value)
 end)
