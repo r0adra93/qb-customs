@@ -97,3 +97,28 @@ end)
 QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
     cb(Config.Locations)
 end)
+
+-- name, help, args, argsrequired, cb, perms
+QBCore.Commands.Add('customs', 'Open customs (admin only)', {}, false, function(source)
+    local ped = GetPlayerPed(source)
+    TriggerClientEvent('qb-customs:client:EnterCustoms', source, {
+        coords = GetEntityCoords(ped),
+        heading = GetEntityHeading(ped),
+        categories = {
+            repair = true,
+            mods = true,
+            armor = true,
+            respray = true,
+            liveries = true,
+            wheels = true,
+            tint = true,
+            plate = true,
+            extras = true,
+            neons = true,
+            xenons = true,
+            horn = true,
+            turbo = true,
+            cosmetics = true,
+        }
+    })
+end, 'admin')
