@@ -81,7 +81,6 @@ end)
 
 RegisterNetEvent('qb-customs:server:updateRepairCost', function(cost)
     local source = source
-    if not QBCore.Functions.HasPermission(source, 'god') then return CancelEvent() end
     RepairCosts[source] = cost
 end)
 
