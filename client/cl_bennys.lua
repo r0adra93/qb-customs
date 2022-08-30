@@ -546,8 +546,8 @@ function ApplyMod(categoryID, modID)
         originalMod = modID
 
         SetVehicleMod(plyVeh, categoryID, modID)
-		
-	if categoryID == 48 then
+
+        if categoryID == 48 then
             SetVehicleLivery(plyVeh, modID)
         end
     end
