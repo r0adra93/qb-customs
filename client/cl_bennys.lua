@@ -957,7 +957,7 @@ CreateThread(function()
                     CheckForGhostVehicle()
                 elseif CustomsData['location'] == location and CustomsData['spot'] == _name then
                     CustomsData = {}
-                    if Config.UseRadial then
+                    if Config.UseRadial and radialMenuItemId then
                         exports['qb-radialmenu']:RemoveOption(radialMenuItemId)
                         radialMenuItemId = nil
                     end
