@@ -3,6 +3,8 @@ Config = Config or {}
 Config.Debug = false -- Set to True to enable Debug Prints
 Config.MoneyType = 'bank'
 Config.RepairMoneyType = 'cash'
+Config.DefaultRepairPrice = 600 -- Repair price that is used if a vehicle-specific price is not available
+Config.BaseRepairPrice = 0 -- Starting repair price. Vehicle damage of each player (0-1000) is added to it later
 Config.UseRadial = false -- Will use qb-radial menu for entering instead of press E
 Config.allowGovPlateIndex = false -- Setting this to true will allow all vehicles to purchase gov plate index "Blue on White #3" (only for emergency vehicles otherwise)
 
