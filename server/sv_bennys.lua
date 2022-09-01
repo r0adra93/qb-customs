@@ -46,7 +46,7 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
     local balance = Player.Functions.GetMoney(moneyType)
 
     if type == "repair" then
-        local repairCost = RepairCosts[source] or 600
+        local repairCost = RepairCosts[source] or Config.DefaultRepairPrice
         moneyType = Config.RepairMoneyType
         balance = Player.Functions.GetMoney(moneyType)
         if balance >= repairCost then
