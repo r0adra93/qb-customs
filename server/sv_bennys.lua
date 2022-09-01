@@ -30,6 +30,10 @@ QBCore.Functions.CreateCallback('qb-customs:server:getOnDutyMechanics', function
     cb(currentMechanics)
 end)
 
+QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
+    cb(Config.Locations)
+end)
+
 -----------------------
 ---- Server Events ----
 -----------------------
@@ -86,16 +90,14 @@ RegisterNetEvent("qb-customs:server:updateVehicle", function(myCar)
     end
 end)
 
--- Use somthing like this to dynamically enable/disable a location. Can be used to change anything at a location.
+-- Use this event to dynamically enable/disable a location. Can be used to change anything at a location.
 -- TriggerEvent('qb-customs:server:UpdateLocation', 'Hayes', 'settings', 'enabled', test)
 
 RegisterNetEvent('qb-customs:server:UpdateLocation', function(location, type, key, value)
+    local source = source
+    if not QBCore.Functions.HasPermission(source, 'god') then return CancelEvent() end
     Config.Locations[location][type][key] = value
     TriggerClientEvent('qb-customs:client:UpdateLocation', -1, location, type, key, value)
-end)
-
-QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
-    cb(Config.Locations)
 end)
 
 -- name, help, args, argsrequired, cb, perms
