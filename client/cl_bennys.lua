@@ -898,9 +898,8 @@ function CheckRestrictions(location)
 end
 
 function SetupInteraction()
-    QBCore.Functions.TriggerCallback('qb-customs:server:getOnDutyMechanics', function(result)
+    QBCore.Functions.TriggerCallback('qb-vehicletuning:server:IsMechanicAvailable', function(currentMechanics)
         local text = CustomsData.drawtextui
-        local currentMechanics = result
         if PlayerData.job.name ~= 'mechanic' and Config.DisableWhenMechanicsOnline and currentMechanics >= Config.MinOnlineMechanics then
             text = text .. ' is currently unavailable. Please find a mechanic.'
         else

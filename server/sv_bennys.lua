@@ -19,17 +19,6 @@ end
 ----   Callbacks   ----
 -----------------------
 
-QBCore.Functions.CreateCallback('qb-customs:server:getOnDutyMechanics', function(_, cb)
-    local currentMechanics = 0
-    local players = QBCore.Functions.GetQBPlayers()
-    for i = 1, #players do
-        if players[i].PlayerData.job.name == 'mechanic' and players[i].PlayerData.job.onduty then
-            currentMechanics += 1
-        end
-    end
-    cb(currentMechanics)
-end)
-
 QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
     cb(Config.Locations)
 end)
