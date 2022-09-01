@@ -787,11 +787,13 @@ function EnterLocation(override)
     FreezeEntityPosition(plyVeh, true)
     SetEntityCollision(plyVeh, false, true)
 
+    local vehicleHealth = GetVehicleBodyHealth(plyVeh)
+
     local welcomeLabel = (locationData and locationData.settings.welcomeLabel) or "Welcome to Benny's Motorworks!"
-    InitiateMenus(isMotorcycle, GetVehicleBodyHealth(plyVeh), categories, welcomeLabel)
+    InitiateMenus(isMotorcycle, vehicleHealth, categories, welcomeLabel)
 
     SetTimeout(100, function()
-        if (Config.BaseRepairPrice + 1000 - GetVehicleBodyHealth(plyVeh)) > 0 and categories.repair then
+        if vehicleHealth < 1000.0 and (Config.BaseRepairPrice + 1000 - vehicleHealth) > 0 and categories.repair then
             DisplayMenu(true, "repairMenu")
         else
             DisplayMenu(true, "mainMenu")
