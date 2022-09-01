@@ -751,7 +751,7 @@ function EnterLocation(override)
         end
     elseif override then canEnter = true end
 
-    QBCore.Functions.TriggerCallback('qb-customs:server:getOnDutyMechanics', function(currentMechanics)
+    QBCore.Functions.TriggerCallback('qb-vehicletuning:server:IsMechanicAvailable', function(currentMechanics)
         if currentMechanics >= Config.MinOnlineMechanics and not override and PlayerData.job.name ~= 'mechanic' then
             repairOnly = true
             for k, v in pairs(Config.DisabledCategoriesMechanics) do
