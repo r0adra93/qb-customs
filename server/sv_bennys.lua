@@ -49,24 +49,39 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
         price = vehicleCustomisationPrices[type].price
     end
     local restrictionJobs = Config.Locations[location] and Config.Locations[location].restrictions.job or {}
-    for i = 1, math.max(#restrictionJobs, #Config.PaidBySociety) do
-        if restrictionJobs[i] == job or Config.PaidBySociety[i] == job then
-            local societyBalance = exports['qb-management']:GetAccount(job)
-            if societyBalance >= price then
-                moneyType = 'society'
-                exports['qb-management']:RemoveMoney(job, price)
-            else
-                TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
-            end
+    local paidBySociety = false
+    local jobRestricted = false
+    for i = 1, #restrictionJobs do
+        if restrictionJobs[i] == job then
+            jobRestricted = true
+            paidBySociety = true
             break
         end
     end
-    if balance >= price or moneyType == 'society' then
-        if moneyType ~= 'society' then
+    if not paidBySociety then
+        for i = 1, #Config.PaidBySociety do
+            if Config.PaidBySociety[i] == job then
+                paidBySociety = true
+                break
+            end
+        end
+    end
+    if paidBySociety then
+        if exports['qb-management']:GetAccount(job) >= price then
+            exports['qb-management']:RemoveMoney(job, price)
+        else
+            paidBySociety = false
+            TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
+        end
+    end
+    if balance >= price or paidBySociety then
+        if not paidBySociety then
             Player.Functions.RemoveMoney(moneyType, price, "bennys")
         end
+        if jobRestricted and job ~= 'mechanic' then
+            exports['qb-management']:AddMoney("mechanic", price)
+        end
         TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-        exports['qb-management']:AddMoney("mechanic", price)
     else
         TriggerClientEvent('qb-customs:client:purchaseFailed', source)
     end
