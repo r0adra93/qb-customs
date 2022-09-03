@@ -204,7 +204,7 @@ function InitiateMenus(isMotorcycle, vehicleHealth, categories, welcomeLabel)
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
     --#[Repair Menu]#--
     if vehicleHealth < 1000.0 and categories.repair then
-        local repairCost = math.ceil(Config.BaseRepairPrice + 1000 - vehicleHealth)
+        local repairCost = math.ceil(Config.BaseRepairPrice + ((1000 - vehicleHealth) * Config.RepairPriceMultiplier))
         if repairCost > 0 then
             TriggerServerEvent("qb-customs:server:updateRepairCost", repairCost)
             createMenu("repairMenu", welcomeLabel, "Repair Vehicle")
