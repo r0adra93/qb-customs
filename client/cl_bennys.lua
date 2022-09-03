@@ -806,7 +806,7 @@ function EnterLocation(override)
         InitiateMenus(isMotorcycle, vehicleHealth, categories, welcomeLabel)
 
         SetTimeout(100, function()
-            if vehicleHealth < 1000.0 and (Config.BaseRepairPrice + 1000 - vehicleHealth) > 0 and categories.repair then
+            if vehicleHealth < 1000.0 and Config.BaseRepairPrice + ((1000 - vehicleHealth) * Config.RepairPriceMultiplier) > 0 and categories.repair then
                 DisplayMenu(true, "repairMenu")
             else
                 DisplayMenu(true, "mainMenu")
