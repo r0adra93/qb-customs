@@ -32,39 +32,58 @@ AddEventHandler("playerDropped", function()
     RepairCosts[source] = nil
 end)
 
-RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel)
+RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel, location)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
+    local job = Player.PlayerData.job.name
     local moneyType = Config.MoneyType
     local balance = Player.Functions.GetMoney(moneyType)
-
+    local price
     if type == "repair" then
-        local repairCost = RepairCosts[source] or Config.DefaultRepairPrice
+        price = RepairCosts[source] or Config.DefaultRepairPrice
         moneyType = Config.RepairMoneyType
         balance = Player.Functions.GetMoney(moneyType)
-        if balance >= repairCost then
-            Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            exports['qb-management']:AddMoney("mechanic", repairCost)
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
-        end
     elseif type == "performance" or type == "turbo" then
-        if balance >= vehicleCustomisationPrices[type].prices[upgradeLevel] then
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
-            exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].prices[upgradeLevel])
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
-        end
+        price = vehicleCustomisationPrices[type].prices[upgradeLevel]
     else
-        if balance >= vehicleCustomisationPrices[type].price then
-            TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
-            Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
-            exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].price)
-        else
-            TriggerClientEvent('qb-customs:client:purchaseFailed', source)
+        price = vehicleCustomisationPrices[type].price
+    end
+    local restrictionJobs = Config.Locations[location] and Config.Locations[location].restrictions.job or {}
+    local paidBySociety = false
+    local jobRestricted = false
+    for i = 1, #restrictionJobs do
+        if restrictionJobs[i] == job then
+            jobRestricted = true
+            paidBySociety = true
+            break
         end
+    end
+    if not paidBySociety then
+        for i = 1, #Config.PaidBySociety do
+            if Config.PaidBySociety[i] == job then
+                paidBySociety = true
+                break
+            end
+        end
+    end
+    if paidBySociety then
+        if exports['qb-management']:GetAccount(job) >= price then
+            exports['qb-management']:RemoveMoney(job, price)
+        else
+            paidBySociety = false
+            TriggerClientEvent('QBCore:Notify', source, "Your job society can't pay for this. You will be charged instead.")
+        end
+    end
+    if balance >= price or paidBySociety then
+        if not paidBySociety then
+            Player.Functions.RemoveMoney(moneyType, price, "bennys")
+        end
+        if jobRestricted and job ~= 'mechanic' then
+            exports['qb-management']:AddMoney("mechanic", price)
+        end
+        TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
+    else
+        TriggerClientEvent('qb-customs:client:purchaseFailed', source)
     end
 end)
 

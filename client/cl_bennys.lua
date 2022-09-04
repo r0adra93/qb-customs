@@ -109,7 +109,7 @@ function AttemptPurchase(type, upgradeLevel)
     if upgradeLevel ~= nil then
         upgradeLevel = upgradeLevel + 2
     end
-    TriggerServerEvent("qb-customs:server:attemptPurchase", type, upgradeLevel)
+    TriggerServerEvent("qb-customs:server:attemptPurchase", type, upgradeLevel, CustomsData.location)
 
     attemptingPurchase = true
 
