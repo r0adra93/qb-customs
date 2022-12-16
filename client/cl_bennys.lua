@@ -911,6 +911,7 @@ function GetLocations()
     end)
 end
 function CheckForKeypress()
+    local data
     for k,v in pairs(CustomsData) do
         if not v.jobs then
             data[k] = v
