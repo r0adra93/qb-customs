@@ -911,7 +911,7 @@ function GetLocations()
     end)
 end
 function CheckForKeypress()
-    local data
+    local data = {}
     for k,v in pairs(CustomsData) do
         if not v.jobs then
             data[k] = v
@@ -932,7 +932,7 @@ end
 -- If so it will set the collision to true and unfreeze the entity =D
 function CheckForGhostVehicle()
     local check = GetVehiclePedIsIn(PlayerPedId(), false)
-    if QBCore.Shared.QBJobsStatus then check = GetLastDrivenVehicle(plyPed) end
+    if QBCore.Shared.QBJobsStatus then check = GetLastDrivenVehicle(PlayerPedId()) end
     if check ~= 0 then return end
     local closestVehicle, closestDistance = QBCore.Functions.GetClosestVehicle(GetEntityCoords(PlayerPedId()))
     if closestVehicle ~= -1 and closestDistance < 10.0 and GetEntityCollisionDisabled(closestVehicle) and GetPedInVehicleSeat(closestVehicle, -1) == 0 then
