@@ -14,6 +14,12 @@ local function IsVehicleOwned(plate)
     if result then retval = true end
     return retval
 end
+local function buildLocations(res)
+    for k,v in pairs(res) do
+        Config.Locations[k] = v
+    end
+end
+exports("buildLocations",buildLocations)
 
 -----------------------
 ----   Callbacks   ----

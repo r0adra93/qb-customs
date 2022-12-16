@@ -39,6 +39,7 @@ local radialMenuItemId = nil
 local function saveVehicle()
     local plyPed = PlayerPedId()
     local veh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then veh = GetLastDrivenVehicle(plyPed) end
     local myCar = QBCore.Functions.GetVehicleProperties(veh)
     TriggerServerEvent('qb-customs:server:updateVehicle', myCar)
 end
@@ -127,6 +128,7 @@ end
 function RepairVehicle()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local getFuel = GetVehicleFuelLevel(plyVeh)
 
     SetVehicleFixed(plyVeh)
@@ -140,6 +142,7 @@ end
 function GetCurrentMod(id)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local mod = GetVehicleMod(plyVeh, id)
     local modName = GetLabelText(GetModTextLabel(plyVeh, id, mod))
 
@@ -149,6 +152,7 @@ end
 function GetCurrentWheel()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local wheel = GetVehicleMod(plyVeh, 23)
     local wheelName = GetLabelText(GetModTextLabel(plyVeh, 23, wheel))
     local wheelType = GetVehicleWheelType(plyVeh)
@@ -159,6 +163,7 @@ end
 function GetCurrentCustomWheelState()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local state = GetVehicleModVariation(plyVeh, 23)
 
     return state and 1 or 0
@@ -175,6 +180,7 @@ end
 function GetCurrentWindowTint()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     return GetVehicleWindowTint(plyVeh)
 end
@@ -182,6 +188,7 @@ end
 function GetCurrentVehicleWheelSmokeColour()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local r, g, b = GetVehicleTyreSmokeColor(plyVeh)
 
     return r, g, b
@@ -190,6 +197,7 @@ end
 function GetCurrentNeonState(id)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local isEnabled = IsVehicleNeonLightEnabled(plyVeh, id)
 
     return isEnabled and 1 or 0
@@ -198,6 +206,7 @@ end
 function GetCurrentNeonColour()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local r, g, b = GetVehicleNeonLightsColour(plyVeh)
 
     return r, g, b
@@ -206,6 +215,7 @@ end
 function GetCurrentXenonState()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local isEnabled = IsToggleModOn(plyVeh, 22)
 
     return isEnabled and 1 or 0
@@ -214,6 +224,7 @@ end
 function GetCurrentXenonColour()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     return GetVehicleHeadlightsColour(plyVeh)
 end
@@ -221,6 +232,7 @@ end
 function GetCurrentTurboState()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local isEnabled = IsToggleModOn(plyVeh, 18)
 
     return isEnabled and 0 or -1
@@ -229,6 +241,7 @@ end
 function CheckValidMods(category, id, wheelType)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local tempWheel = GetVehicleMod(plyVeh, 23)
     local tempWheelType = GetVehicleWheelType(plyVeh)
     local tempWheelCustom = GetVehicleModVariation(plyVeh, 23)
@@ -294,6 +307,7 @@ end
 function RestoreOriginalMod()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleMod(plyVeh, originalCategory, originalMod)
     SetVehicleDoorsShut(plyVeh, true)
@@ -305,6 +319,7 @@ end
 function RestoreOriginalWindowTint()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleWindowTint(plyVeh, originalWindowTint)
 
@@ -314,6 +329,7 @@ end
 function RestoreOriginalColours()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleColours(plyVeh, originalPrimaryColour, originalSecondaryColour)
     SetVehicleExtraColours(plyVeh, originalPearlescentColour, originalWheelColour)
@@ -331,6 +347,7 @@ end
 function RestoreOriginalWheels()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleWheelType(plyVeh, originalWheelType)
 
@@ -351,6 +368,7 @@ end
 function RestoreOriginalNeonStates()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleNeonLightEnabled(plyVeh, originalNeonLightSide, originalNeonLightState)
 
@@ -361,6 +379,7 @@ end
 function RestoreOriginalNeonColours()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleNeonLightsColour(plyVeh, originalNeonColourR, originalNeonColourG, originalNeonColourB)
 
@@ -372,6 +391,7 @@ end
 function RestoreOriginalXenonColour()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleHeadlightsColour(plyVeh, originalXenonColour)
     SetVehicleLights(plyVeh, 0)
@@ -382,18 +402,21 @@ end
 function RestoreOldLivery()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     SetVehicleLivery(plyVeh, originalOldLivery)
 end
 
 function RestorePlateIndex()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     SetVehicleNumberPlateTextIndex(plyVeh, originalPlateIndex)
 end
 
 function PreviewMod(categoryID, modID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if originalMod == nil and originalCategory == nil then
         originalCategory = categoryID
@@ -412,6 +435,7 @@ end
 function PreviewWindowTint(windowTintID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if originalWindowTint == nil then
         originalWindowTint = GetVehicleWindowTint(plyVeh)
@@ -423,6 +447,7 @@ end
 function PreviewColour(paintType, paintCategory, paintID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     SetVehicleModKit(plyVeh, 0)
     if originalDashColour == nil and originalInterColour == nil and originalPrimaryColour == nil and originalSecondaryColour == nil and originalPearlescentColour == nil and originalWheelColour == nil then
         originalPrimaryColour, originalSecondaryColour = GetVehicleColours(plyVeh)
@@ -453,6 +478,7 @@ end
 function PreviewWheel(categoryID, wheelID, wheelType)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local doesHaveCustomWheels = GetVehicleModVariation(plyVeh, 23)
 
     if originalWheelCategory == nil and originalWheel == nil and originalWheelType == nil and originalCustomWheels == nil then
@@ -473,6 +499,7 @@ end
 function PreviewNeon(side, enabled)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if originalNeonLightState == nil and originalNeonLightSide == nil then
         if IsVehicleNeonLightEnabled(plyVeh, side) then
@@ -490,6 +517,7 @@ end
 function PreviewNeonColour(r, g, b)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if originalNeonColourR == nil and originalNeonColourG == nil and originalNeonColourB == nil then
         originalNeonColourR, originalNeonColourG, originalNeonColourB = GetVehicleNeonLightsColour(plyVeh)
@@ -501,6 +529,7 @@ end
 function PreviewXenonColour(colour)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if originalXenonColour == nil then
         originalXenonColour = GetVehicleHeadlightsColour(plyVeh)
@@ -513,6 +542,7 @@ end
 function PreviewOldLivery(liv)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     if originalOldLivery == nil then
         originalOldLivery = GetVehicleLivery(plyVeh)
     end
@@ -523,6 +553,7 @@ end
 function PreviewPlateIndex(index)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     if originalPlateIndex == nil then
         originalPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
     end
@@ -533,6 +564,7 @@ end
 function ApplyMod(categoryID, modID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     if categoryID == 18 then
         ToggleVehicleMod(plyVeh, categoryID, modID + 1)
@@ -556,6 +588,7 @@ end
 function ApplyExtra(extraID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local isEnabled = IsVehicleExtraTurnedOn(plyVeh, extraID)
     if isEnabled == 1 then
         SetVehicleExtra(plyVeh, tonumber(extraID), 1)
@@ -569,6 +602,7 @@ end
 function ApplyWindowTint(windowTintID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     originalWindowTint = windowTintID
 
@@ -578,6 +612,7 @@ end
 function ApplyColour(paintType, paintCategory, paintID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local vehPrimaryColour, vehSecondaryColour = GetVehicleColours(plyVeh)
     local vehPearlescentColour, vehWheelColour = GetVehicleExtraColours(plyVeh)
 
@@ -613,6 +648,7 @@ end
 function ApplyWheel(categoryID, wheelID, wheelType)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     local doesHaveCustomWheels = GetVehicleModVariation(plyVeh, 23)
 
     originalWheelCategory = categoryID
@@ -630,6 +666,7 @@ end
 function ApplyCustomWheel(state)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     SetVehicleMod(plyVeh, 23, GetVehicleMod(plyVeh, 23), state)
 
@@ -641,6 +678,7 @@ end
 function ApplyNeon(side, enabled)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     originalNeonLightState = enabled
     originalNeonLightSide = side
@@ -651,6 +689,7 @@ end
 function ApplyNeonColour(r, g, b)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     originalNeonColourR = r
     originalNeonColourG = g
@@ -662,6 +701,7 @@ end
 function ApplyXenonLights(category, state)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     ToggleVehicleMod(plyVeh, category, state)
 end
@@ -669,6 +709,7 @@ end
 function ApplyXenonColour(colour)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     originalXenonColour = colour
 
@@ -678,6 +719,7 @@ end
 function ApplyOldLivery(liv)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     originalOldLivery = liv
 
@@ -687,6 +729,7 @@ end
 function ApplyPlateIndex(index)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
     originalPlateIndex = index
     SetVehicleNumberPlateTextIndex(plyVeh, index)
 end
@@ -694,6 +737,7 @@ end
 function ApplyTyreSmoke(r, g, b)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     ToggleVehicleMod(plyVeh, 20, true)
     SetVehicleTyreSmokeColor(plyVeh, r, g, b)
@@ -702,6 +746,7 @@ end
 function ExitBennys()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
 
     saveVehicle()
 
@@ -738,7 +783,6 @@ function EnterLocation(override)
         turbo = false,
         cosmetics = false,
     }
-
     local canEnter = false
     local repairOnly = true
     if next(CustomsData) then
@@ -786,6 +830,7 @@ function EnterLocation(override)
 
         local plyPed = PlayerPedId()
         local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        if QBCore.Shared.QBJobsStatus then plyVeh = GetLastDrivenVehicle(plyPed) end
         local isMotorcycle
 
         if GetVehicleClass(plyVeh) == 8 then --Motorcycle
@@ -820,7 +865,7 @@ function EnterLocation(override)
         DisableControls(repairOnly)
     end)
 end
-
+exports("EnterLocation",EnterLocation)
 function DisableControls(repairOnly)
     CreateThread(function()
         while isPlyInBennys do
@@ -865,12 +910,16 @@ function GetLocations()
         Config.Locations = locations
     end)
 end
-
 function CheckForKeypress()
-    if next(CustomsData) then
+    for k,v in pairs(CustomsData) do
+        if not v.jobs then
+            data[k] = v
+        end
+    end
+    if next(data) then
         CreateThread(function()
-            while next(CustomsData) and not isPlyInBennys do
-                if IsControlJustReleased(0, 38) and CheckRestrictions(CustomsData.location) then EnterLocation() return end
+            while next(data) and not isPlyInBennys do
+                if IsControlJustReleased(0, 38) and CheckRestrictions(data.location) then EnterLocation() return end
                 Wait(0)
             end
         end)
@@ -881,7 +930,9 @@ end
 -- The vehicle is checked if it has collision disabled and nobody in the driver seat
 -- If so it will set the collision to true and unfreeze the entity =D
 function CheckForGhostVehicle()
-    if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then return end
+    local check = GetVehiclePedIsIn(PlayerPedId(), false)
+    if QBCore.Shared.QBJobsStatus then check = GetLastDrivenVehicle(plyPed) end
+    if check ~= 0 then return end
     local closestVehicle, closestDistance = QBCore.Functions.GetClosestVehicle(GetEntityCoords(PlayerPedId()))
     if closestVehicle ~= -1 and closestDistance < 10.0 and GetEntityCollisionDisabled(closestVehicle) and GetPedInVehicleSeat(closestVehicle, -1) == 0 then
         FreezeEntityPosition(closestVehicle, false)
@@ -905,14 +956,17 @@ function CheckRestrictions(location)
     local allowedJob = AllowJob(restrictions, PlayerData.job.name)
     local allowedGang = AllowGang(restrictions, PlayerData.gang.name)
     local allowedClass = AllowVehicleClass(restrictions, GetVehiclePedIsIn(PlayerPed, false))
-
+    if QBCore.Shared.QBJobsStatus then
+        vehicle = GetLastDrivenVehicle(PlayerPed)
+        allowedClass = AllowVehicleClass(restrictions, GetLastDrivenVehicle(PlayerPed))
+    end
     if Config.Debug then
         print(string.format('Is Enabled: %s\nVehicle: %s\nallowedJob: %s\nallowedGang: %s\nallowedClass: %s', isEnabled, vehicle, allowedJob, allowedGang, allowedClass))
         print('***************************************************************************')
     end
     return isEnabled and vehicle ~= 0 and allowedJob and allowedGang and allowedClass
 end
-
+exports("CheckRestrictions",CheckRestrictions)
 function SetupInteraction()
     QBCore.Functions.TriggerCallback('qb-vehicletuning:server:IsMechanicAvailable', function(currentMechanics)
         local text = CustomsData.drawtextui
@@ -940,6 +994,23 @@ function SetupInteraction()
 end
 
 exports('GetCustomsData', function() if next(CustomsData) ~= nil then return CustomsData else return nil end end)
+local function buildLocations(res)
+    Config.Locations[res.pj] = res[res.pj]
+end
+exports("buildLocations",buildLocations)
+local function processExports(res)
+    CustomsData = {
+        ['location'] = res.pj,
+        ['spot'] = res.spot,
+        ['coords'] = res.coords,
+        ['heading'] = res.heading,
+        ['drawtextui'] = res.drawtextui,
+    }
+    if not Config.Locations[res.pj] then Config.Locations[res.pj] = res.location end
+    EnterLocation()
+end
+exports("processExports",processExports)
+
 -----------------------
 ----   Threads     ----
 -----------------------
@@ -991,12 +1062,6 @@ end)
 -----------------------
 ---- Client Events ----
 -----------------------
-
-AddEventHandler('onResourceStart', function(resourceName)
-    if resourceName == GetCurrentResourceName() and QBCore.Functions.GetPlayerData() ~= {} then
-        GetLocations()
-    end
-end)
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() and isPlyInBennys then
